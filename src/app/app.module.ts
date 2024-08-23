@@ -14,8 +14,8 @@ import { SharedModule } from './shared/shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
-    ValidationMessageComponent,
+    //NotFoundComponent,
+    //ValidationMessageComponent,
     NavbarComponent,
     HomeComponent,
     FooterComponent

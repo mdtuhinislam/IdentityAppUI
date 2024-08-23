@@ -25,26 +25,29 @@ errorMessages : string[]=[];
     this.registrationForm = this.formBuilder.group({
       firstName : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
       lastName : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
-      email : ['', [Validators.required, Validators.pattern('^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')]],
-      password : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      email: ['', [Validators.required, Validators.pattern('^[\\w-\\.]+@[\\w-\\.]+\\.[a-z]{2,4}$')]],
+      password : ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
 
     })
   }
   register(){
-    debugger;
-    console.log(this.registrationForm.value);
+    
     this.submitted = true;
     this.errorMessages = [];
-    this.accountService.register(this.registrationForm.value).subscribe({
-      next : (response: any)=>{
-        alert(response.status);
-      },
-      error : (err:any)=>{
-        alert(err.error);
-      }
-  });
-    console.log(this.registrationForm.value);
-    this.initilizeForm();
+    if(this.registrationForm.valid){
+      this.accountService.register(this.registrationForm.value).subscribe({
+        next : (response: any)=>{
+          alert(response.status);
+        },
+        error : (err:any)=>{
+          debugger
+          this.errorMessages = err.error.errors;
+          console.log(err);
+        }
+    });
+      this.initilizeForm();
+    }
+    
   }
 
 }
