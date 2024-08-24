@@ -6,12 +6,12 @@
             </button>
              <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
+                    <li class="nav-item" *ngIf="(this.accService.user$ | async) as user">
                         <a class="nav-link" routerLink="/">Home</a>
                     </li>
                 </ul>
 
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" *ngIf="(this.accService.user$ | async) === null">
                     <li class="nav-item">
                         <a class="btn btn-secondary mx-2" routerLink="/account/register">
                             Create account
@@ -23,6 +23,12 @@
                         </a>
                     </li>
                 </ul>
+                <div class="d-flex allign-item-center" *ngIf="(this.accService.user$ | async) as user">
+                    <a class="text-white" style="text-decoration: none;">
+                        Hi, <span class="h3 text-white">{{user.firstName | titlecase}}</span>
+                    </a>
+                    <a class="btn btn-secondary ms-2" (click)="logout()">Logout</a>
+                </div>
             </div>
         </div>
     </nav>

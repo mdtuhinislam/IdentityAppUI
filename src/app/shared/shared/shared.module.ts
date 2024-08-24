@@ -17,7 +17,7 @@ import { NotFoundComponent } from '../components/errors/not-found/not-found.comp
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
 
   ],
   exports:[

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -13,7 +14,8 @@ registrationForm : FormGroup = new FormGroup({});
 submitted : boolean = false;
 errorMessages : string[]=[];
   constructor(private accountService : AccountService,
-    private formBuilder : FormBuilder
+    private formBuilder : FormBuilder,
+    private toaster : ToastrService
 
   ){
 
@@ -37,12 +39,13 @@ errorMessages : string[]=[];
     if(this.registrationForm.valid){
       this.accountService.register(this.registrationForm.value).subscribe({
         next : (response: any)=>{
-          alert(response.status);
+          this.toaster.success(response,"Message");
         },
         error : (err:any)=>{
           debugger
           this.errorMessages = err.error.errors;
           console.log(err);
+          this.toaster.warning(err);
         }
     });
       this.initilizeForm();

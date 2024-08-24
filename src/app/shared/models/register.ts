@@ -4,3 +4,13 @@ export interface Register{
     email : string,
     password : string
 }
+export interface Login{
+    userName : string,
+    password : string
+}
+export interface User{
+    firstName : string,
+    lastName : string,
+    jwt : string;
+
+}
