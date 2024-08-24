@@ -64,4 +64,9 @@ export class AccountService {
 
 
   }
+  public getHttpHeder(jwt : string | null){
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' +jwt);
+    return headers;
+  }
 }

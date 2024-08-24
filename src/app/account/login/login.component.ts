@@ -4,7 +4,7 @@ import { AccountService } from '../account.service';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { User } from '../../shared/models/register';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,15 +15,27 @@ export class LoginComponent implements OnInit{
   loginForm : FormGroup = new FormGroup({});
   submitted : boolean = false;
   errorMessages : string[]=[];
+  returnUrl : string | null = null;
 
   constructor(private accountService : AccountService,
     private formBuilder : FormBuilder,
     private toaster : ToastrService,
-  private router : Router) {
+  private router : Router,
+private activatedRoute : ActivatedRoute) {
       this.accountService.user$.pipe(take(1)).subscribe({
       next : (user : User | null)=>{
         if(user){
           this.router.navigateByUrl('')
+        }
+        else{
+          this.activatedRoute.queryParamMap.subscribe({
+            next : (queryParams: any)=>{
+              if(queryParams){
+                this.returnUrl = queryParams.get('returnUrl');
+              }
+              
+            }
+          })
         }
       }
       })
@@ -45,6 +57,12 @@ export class LoginComponent implements OnInit{
       this.accountService.login(this.loginForm.value).subscribe({
         next : (response: any)=>{
           this.submitted = false;
+          if(this.returnUrl){
+            this.router.navigateByUrl(this.returnUrl);
+          }
+          else{
+            this.router.navigateByUrl('');
+          }
         },
         error : (err:any)=>{
           debugger
