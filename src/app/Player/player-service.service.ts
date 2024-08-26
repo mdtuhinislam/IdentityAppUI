@@ -11,7 +11,7 @@ export class PlayerServiceService {
   constructor(private http : HttpClient, private accountService : AccountService) { }
 
   getPlayer(){
-    return this.http.get(`${environment.apiUrl}play/get-players`,);
+    return this.http.get(`${environment.apiUrl}play/get-players`);
   }
  
 }

@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { PlayerComponent } from './Player/player/player.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { jwtInterceptor } from './shared/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,7 @@ import { PlayerComponent } from './Player/player/player.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: jwtInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

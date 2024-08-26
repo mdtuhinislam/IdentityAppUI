@@ -12,9 +12,11 @@ export class PlayerComponent implements OnInit{
 constructor(private playService : PlayerServiceService){}
 message : string='';
   ngOnInit(): void {
+    debugger
     this.playService.getPlayer().subscribe({
+      
       next : (response : any)=>{
-        this.message = response.value.Message;
+        this.message = response.message;
       }
     });
   }

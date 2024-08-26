@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../../shared/models/register';
+import { take } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -15,10 +18,24 @@ submitted : boolean = false;
 errorMessages : string[]=[];
   constructor(private accountService : AccountService,
     private formBuilder : FormBuilder,
+    private roter : Router,
     private toaster : ToastrService
 
   ){
-
+    debugger
+    this.accountService.user$.pipe(take(1)).subscribe({
+      next: (user : User | null) =>{
+        debugger
+        if(user){
+          console.log('User: ',user);
+          debugger
+          this.roter.navigateByUrl('');
+        }
+      },
+      error : (error)=>{
+        console.log('Register page error :', error);
+      }
+    })
   }
   ngOnInit(): void {
     this.initilizeForm();
